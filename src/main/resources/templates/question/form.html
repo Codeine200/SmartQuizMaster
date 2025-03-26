@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${question.id} ? 'Edit question' : 'Add question'"></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<script>
+    let answerIndex = [[${answersSize}]];
+
+    function addAnswer() {
+        answerIndex++;
+
+        var answerContainer = document.getElementById("answer-container");
+        var newInput = document.createElement("div");
+        newInput.classList.add("input-container");
+        newInput.innerHTML = `
+                <input type="text" name="answers[${answerIndex}].name" placeholder="Answer" />
+                <button type="button" class="button remove" onclick="removeAnswer(this)">Remove</button>
+            `;
+        answerContainer.appendChild(newInput);
+    }
+
+    function removeAnswer(button) {
+        button.parentElement.remove();
+    }
+
+    function toggleAnswerInputs() {
+        var addAnswerBtn = document.getElementById("addAnswerBtn");
+        var type = document.getElementById("type").value;
+        var answerContainer = document.getElementById("answer-container");
+        if (type === "SINGLE" || type === "MULTIPLE") {
+            answerContainer.style.display = "flex";
+            addAnswerBtn.style.display = "block";
+        } else {
+            answerContainer.style.display = "none";
+            addAnswerBtn.style.display = "none";
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        toggleAnswerInputs();
+    });
+
+</script>
+
+<form th:action="@{/questions}" th:object="${question}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div class="form-container">
+        <div class="form">
+            <h1 th:text="${question.id} ? 'Edit question' : 'Add question'"></h1>
+
+            <div class="input-container">
+                <input placeholder="Name" type="text" id="name" th:field="*{name}" required autocomplete="off" />
+            </div>
+
+            <input type="hidden" th:field="*{quiz.id}" />
+
+            <div class="input-container">
+                <select id="type" name="type" th:field="*{type}" onchange="toggleAnswerInputs()">
+                    <option value="TEXT">TEXT</option>
+                    <option value="SINGLE">SINGLE</option>
+                    <option value="MULTIPLE">MULTIPLE</option>
+                </select>
+            </div>
+
+            <div id="answer-container" class="answer-container" style="display: none;">
+                <div class="input-container" th:each="answer, iterStat : ${question.answers}">
+                    <input type="hidden" th:field="*{answers[__${iterStat.index}__].id}"  />
+                    <input type="text" th:field="*{answers[__${iterStat.index}__].name}" required />
+                    <button type="button" class="button remove" onclick="removeAnswer(this)">Remove</button>
+                </div>
+                <div class="input-container">
+                    <input type="text" th:name="'answers[' + ${answersSize} + '].name'" placeholder="Answer" />
+                    <button type="button" class="button remove" onclick="removeAnswer(this)">Remove</button>
+                </div>
+            </div>
+
+            <button type="button" id="addAnswerBtn" class="button detail" onclick="addAnswer()" style="display: none;">Add Answer</button>
+            <div class="form-action">
+                <a th:href="@{/quiz/{id}(id=${quizId})}"><span>Cancel</span></a>
+                <button type="submit"><span>Save</span></button>
+            </div>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

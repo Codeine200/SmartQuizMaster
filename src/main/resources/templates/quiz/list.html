@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz List</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="main">
+    <div class="header-action">
+        <div class="title"><h1>Quiz List</h1></div>
+        <div>
+            <a th:href="@{/quiz/new}">Add quiz</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="header">
+            <div class="content">
+                <h6>ID</h6>
+                <h6>Name</h6>
+                <h6>Description</h6>
+                <h6 style="text-align: right;">Questions</h6>
+                <h6 style="text-align: right;">Action</h6>
+            </div>
+        </div>
+        <div class="body">
+            <div class="content" th:each="quiz : ${quizzes}">
+                <p th:text="${quiz.id}">id</p>
+                <p th:text="${quiz.name}">name</p>
+                <p th:text="${quiz.description}">description</p>
+                <p style="text-align: right;" th:text="${quiz.questions.size()}">count of questions</p>
+                <p style="text-align: right;">
+                    <a class="button detail" th:href="@{/quiz/{id}(id=${quiz.id})}">Detail</a>
+                    <a class="button edit"   th:href="@{/quiz/edit/{id}(id=${quiz.id})}">Edit</a>
+                    <a class="button remove" th:href="@{/quiz/delete/{id}(id=${quiz.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Details</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="main">
+    <div class="top">
+        <div class="top-action">
+            <div class="title"><h1 th:text="${quiz.name}">Quiz name</h1></div>
+            <div>
+                <a th:href="@{/questions/new(quizId=${quiz.id})}">Add Question</a>
+            </div>
+        </div>
+        <div class="description" th:text="${quiz.description}">Description of quiz</div>
+    </div>
+    <div class="container-question">
+        <div class="header">
+            <div class="content">
+                <h6>ID</h6>
+                <h6>Question</h6>
+                <h6 style="text-align: right;">Type</h6>
+                <h6 style="text-align: right;">Action</h6>
+            </div>
+        </div>
+        <div class="body">
+            <th:block th:each="question, iterStat : ${quiz.questions}">
+                <div class="content question">
+                    <p th:text="${question.id}">id</p>
+                    <p th:text="${question.name}">Question text</p>
+                    <p style="text-align: right;" th:text="${question.type}">TYPE</p>
+                    <p style="text-align: right;">
+                        <a class="button edit"   th:href="@{/questions/edit/{questionsId}(questionsId=${question.id})}">Edit</a>
+                        <a class="button remove" th:href="@{/questions/delete/{questionsId}(questionsId=${question.id},quizId=${quiz.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+                    </p>
+                </div>
+                <th:block th:each="answer : ${question.answers}">
+                    <div class="content">
+                        <p></p>
+                        <p class="answer" th:text="${answer.name}">Answer test</p>
+                        <p style="text-align: right;"></p>
+                        <p style="text-align: right;">
+                            <a class="button edit"   th:href="@{/answers/edit/{answerId}(answerId=${answer.id},quizId=${quiz.id})}">Edit</a>
+                            <a class="button remove" th:href="@{/answers/delete/{answerId}(answerId=${answer.id},quizId=${quiz.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+                        </p>
+                    </div>
+                </th:block>
+            </th:block>
+        </div>
+    </div>
+</div>
+</body>
+</html>

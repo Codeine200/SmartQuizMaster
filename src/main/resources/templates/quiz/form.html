@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${quiz.id} ? 'Edit quiz' : 'Add quiz'"></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<form th:action="@{/quiz}" th:object="${quiz}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div class="form-container">
+        <div class="form">
+            <h1 th:text="${quiz.id} ? 'Edit quiz' : 'Add quiz'"></h1>
+            <div class="input-container">
+                <input placeholder="Name" type="text" id="name" th:field="*{name}" required autocomplete="off" />
+            </div>
+            <div class="input-container">
+                <input placeholder="Description" type="text" id="description" th:field="*{description}" autocomplete="off" />
+            </div>
+            <div class="form-action">
+                <a th:href="@{/quiz}"><span>Cancel</span></a>
+                <button type="submit"><span>Save</span></button>
+            </div>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

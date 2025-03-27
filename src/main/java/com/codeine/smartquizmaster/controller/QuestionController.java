@@ -50,6 +50,7 @@ public class QuestionController {
                     Question question = new Question();
                     question.setQuiz(q);
                     model.addAttribute("question", question);
+                    model.addAttribute("answersSize", 0);
                     return "question/form";
                 }).orElse("redirect:/quiz");
 

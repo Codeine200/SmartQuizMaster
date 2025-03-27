@@ -18,7 +18,6 @@ import java.util.Optional;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final AnswerRepository answerRepository;
 
     public List<Question> findAllQuestionsByQuizId(Long quizId) {
         return questionRepository.findAllQuestionsByQuizId(quizId);

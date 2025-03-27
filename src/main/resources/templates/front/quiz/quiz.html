@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz List</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+
+<form action="/front/quiz" method="post">
+<input type="hidden" th:value="${quiz.id}" name="quizId" />
+<div class="main">
+    <div class="top">
+        <div class="top-action">
+            <div class="title"><h1 th:text="${quiz.name}">Quiz</h1></div>
+        </div>
+        <div class="description" th:text="${quiz.description}">Description of Quiz</div>
+    </div>
+    <div class="container-question">
+        <div class="header">
+            <div class="content">
+                <h6>Question</h6>
+            </div>
+        </div>
+        <div class="body">
+            <th:block th:each="question, qStat : ${quiz.questions}">
+                <div class="content-line question">
+                    <p th:text="${question.name}">question</p>
+                    <input type="hidden" th:name="'answers[' + ${qStat.index} + '].questionId'" th:value="${question.id}">
+                </div>
+
+                <th:block th:if="${question.type.name() == 'SINGLE'}">
+                    <div class="content-line" th:each="answer : ${question.answers}">
+                        <p class="answer">
+                            <input type="radio" th:name="'answers[' + ${qStat.index} + '].selectedAnswerId'" th:value="${answer.id}">
+                            <span th:text="${answer.name}"></span>
+                        </p>
+                    </div>
+                </th:block>
+
+                <div class="content-line" th:if="${question.type.name() == 'TEXT'}">
+                    <p class="answer">
+                        <input type="text" th:name="'answers[' + ${qStat.index} + '].userAnswer'" placeholder="Your answer">
+                    </p>
+                </div>
+
+                <th:block th:if="${question.type.name() == 'MULTIPLE'}">
+                    <div class="content-line" th:each="answer : ${question.answers}">
+                        <p class="answer">
+                            <input type="checkbox" th:name="'answers[' + ${qStat.index} + '].selectedAnswerId'" th:value="${answer.id}">
+                            <span th:text="${answer.name}"></span>
+                        </p>
+                    </div>
+                </th:block>
+            </th:block>
+        </div>
+    </div>
+</div>
+</form>
+</body>
+</html>

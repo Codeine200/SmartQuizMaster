@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz List</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="main-container">
+    <div class="content-list">
+        <a class="quiz" th:href="@{/front/quiz/{id}(id=${quiz.id})}" th:each="quiz : ${quizzes}">
+            <div class="header">
+                <h2 th:text="${quiz.name}">Name Quiz</h2>
+                <h4 th:text="${quiz.description}"> Description</h4>
+            </div>
+            <div class="footer">Questions: <span th:text="${#lists.size(quiz.questions)}"></span></div>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -135,6 +135,10 @@ a {
     grid-template-columns: 50px 250px auto 165px 350px;
 }
 
+.container .body .content-line {
+    grid-template-columns: auto;
+}
+
 .container-question .header .content {
     grid-template-columns: 50px auto 165px 350px;
 }
@@ -150,7 +154,7 @@ a {
     text-decoration: none;
 }
 
-.container .body .content, .container-question .body .content {
+.container .body .content, .container-question .body .content, .container-question .body .content-line {
     display: grid;
     -webkit-box-align: center;
     align-items: center;
@@ -165,7 +169,7 @@ a {
     grid-template-columns: 50px auto 165px 350px;
 }
 
-.container .body .content p, .container-question .body .content p {
+.container .body .content p, .container-question .body .content p, .container-question .body .content-line p {
     color: #f5f8ff;
     font-family: FK Grotesk SemiMono, sans-serif;
     font-size: 16px;
@@ -181,9 +185,13 @@ a {
     margin: 10px 0;
 }
 
-.container-question .body .content p.answer {
+.container-question .body .content p.answer, .content-line p {
     font-size: 14px;
     padding: 0 0 0 40px;
+}
+
+p.answer input {
+    color: #fff;
 }
 
 .button {
@@ -200,6 +208,39 @@ a {
 .edit, .detail {
     background-color: rgba(245, 248, 255, .12);
     color: #f5f8ff;
+}
+
+.main-container  {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    height: 100vh;
+    background-color: #02050a;
+}
+
+.content-list {
+    width: 950px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    display: flex;
+    gap: 20px;
+}
+
+.quiz {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    border-radius: 24px;
+    background-color: #12151a;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    color: #f0f0f0;
+}
+
+.quiz:hover {
+    background-color: #1b1e24;
 }
 
 form .form h1 {

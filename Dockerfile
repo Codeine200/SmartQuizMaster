@@ -1,22 +1,9 @@
-FROM openjdk:17-jdk-slim AS build
+FROM openjdk:21-jdk-slim
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y maven
+COPY . .
 
-COPY pom.xml .
-RUN mvn dependency:go-offline
+RUN ./mvnw clean install
 
-COPY src /app/src
-
-RUN mvn clean package -DskipTests
-
-FROM openjdk:17-jdk-slim
-
-WORKDIR /app
-
-COPY --from=build /app/target/app.jar app.jar
-
-EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "target/app.jar"]

@@ -1,9 +1,9 @@
 spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:postgresql://localhost:5432/quiz
-        username: master
-        password: master9988
+        url: jdbc:postgresql://quiz12345.flycast:5432/quiz_master?sslmode=disable
+        username: quiz_master
+        password: S0xUAr8zHQDZFXj
         driver-class-name: org.postgresql.Driver
         hikari:
             minimum-idle: 5
